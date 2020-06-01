@@ -2,8 +2,8 @@ import java.util.Scanner;
 
 
 
-public class aftergivenNode {
-static Node head;
+public class atspecifiedposition {
+    static Node head;
 static class Node{
 int data;
 Node next;
@@ -32,16 +32,33 @@ next = null;
     }
     return count;
     }
-    static Node givennode(Node previous, int data){
-    if(previous == null){
-    System.out.println("PREVIOUS NODE CANNOT BE NULL");
+    static Node atposition(Node head,int data, int position){
+        int size = length(head);
+        
+        if(position >size -1 || position<1){
+        System.out.println("INVALID POSITION");
+        return head;
+        }
+        Node newNode = new Node(data);
+        if(position == 1){
+        newNode.next =head;
+        return head;
+        }
+        else{
+        Node previous = head;
+        int count = 1;
+        while(count<position - 1){
+        previous = previous.next;
+        count++;
+        }
+        Node current = previous.next;
+        newNode.next = current;
+        previous.next = newNode;
+        return head;
+        }
+        
     }
-    Node newNode = new Node(data);
-    newNode.next = previous.next;
-    previous.next = newNode;
-    return previous;
-    }
-    public static void main(String args[]){
+    public static void main(String[] args){
     Scanner sc = new Scanner(System.in);
         //creating previous node
         Node head = new Node(10);
@@ -55,7 +72,7 @@ next = null;
         head.next.next.next = fourth;
         
         //creating object of class
-        aftergivenNode qw = new aftergivenNode();
+        atspecifiedposition qw = new atspecifiedposition();
         //display linked list before insertion
         qw.display(head);
         //length of linked list
@@ -63,8 +80,10 @@ next = null;
         System.out.println("Length of the linked list before insertion:"+" "+a);
         System.out.print("ENTER VALUE : "+ " ");
         int dq = sc.nextInt();
-        //insert after given node
-        qw.givennode(second, dq);
+        System.out.print("ENTER POSITION : "+ " ");
+        int pos = sc.nextInt();
+        //insert at position
+        qw.atposition(head, dq, pos );
         //display linked list after insertion
         qw.display(head);
         //length of linked list after insertion
